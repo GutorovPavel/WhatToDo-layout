@@ -1,0 +1,478 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+::-webkit-scrollbar {
+    display: none;
+}
+
+body {
+    background: url(images/background4.jpg);
+    color: black;
+    font-family: "Poppins", sans-serif;
+    min-height: 100vh;
+}
+
+/* header */
+
+header {
+    width: 100%;
+    height: 70px;
+    display: inline-block;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 2;
+}
+
+.menu-btn, .profile-btn, .add-todo {
+    display: block;
+    text-align: center;
+    border-radius: 4px;
+    width: 30px;
+    margin: 20px;
+    font-size: 20px;
+    cursor: pointer;
+    color: aliceblue;
+}
+
+.menu-btn {
+    float: left;
+}
+
+.profile-btn, .add-todo {
+    float: right;
+}
+
+.menu-btn:hover, .add-todo:hover {
+    background: rgba(255, 255, 255, 0.088);
+}
+
+.profile-btn img {
+    width: 100%;
+    height: auto;
+    clip-path: circle();
+}
+
+
+
+/* aside */
+
+.sidebar {
+    width: 350px;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: -100%;
+    backdrop-filter: blur(30px);
+    overflow-y: auto;
+    transition: 0.4s ease;
+    transition-property: left;
+    border: 2px solid #ffffff44;
+    border-top: none;
+    border-left: none;
+    border-bottom: none;
+    z-index: 2;
+}
+
+.sidebar.active {
+    left: 0%;
+}
+
+.menu {
+    width: 100%;
+    margin-top: 30px;
+}
+
+.menu .menu-item {
+    position: relative;
+    cursor: pointer;
+}
+
+.menu .menu-item a,
+.menu .projects-title,
+.menu .projects-list {
+    color: aliceblue;
+    font-size: 16px;
+    padding: 5px 30px;
+    display: block;
+    line-height: 30px;
+}
+
+.menu .menu-item a {
+    text-decoration: none;
+}
+
+.menu .projects-list .project {
+    margin-left: 30px;
+}
+
+.menu .menu-item i {
+    margin-right: 10px;
+}
+
+.menu .projects-title {
+    margin-top: 30px;
+}
+
+.menu .menu-item span,
+.projects-title i {
+    position: absolute;
+    right: 0;
+    margin-right: 30px;
+}
+
+.menu .menu-item span {
+    color: rgb(190, 46, 46);
+}
+
+.close-btn {
+    position: absolute;
+    width: 100%;
+    bottom: 0;
+    padding: 20px 0 20px 0;
+}
+
+.close-btn i {
+    display: flex;
+    justify-content: center;
+    font-size: 20px;
+    color: aliceblue;
+}
+
+/* dialog */
+
+.dialog {
+    position: fixed;
+    top: 60px;
+    right: 6px;
+    padding: 20px 30px;
+    color: aliceblue;
+    backdrop-filter: blur(30px);
+    width: fit-content;
+    height: fit-content;
+    border-radius: 8px;
+    border: 2px solid #ffffff44;
+    z-index: 3;
+    opacity: 0;
+    transition: 0.4s ease;
+    transition-property: opacity;
+    box-shadow: 0 1px 2px 0 rgba(255, 255, 255, 0.3);
+}
+
+.dialog.active {
+    opacity: 1;
+}
+
+.dialog .account {
+    display: flex;
+    font-size: 14px;
+}
+
+.dialog .account .image-container {
+    width: 50px;
+}
+
+.dialog .account .image-container img {
+    width: 100%;
+    height: auto;
+    clip-path: circle();
+}
+
+.dialog .account .credentials {
+    padding: 0 20px;
+    line-height: 25px;
+}
+
+.dialog .account-options {
+    margin-top: 20px;
+    line-height: 40px;
+    list-style: none;
+}
+
+.dialog .account-options i {
+    margin-right: 16px;
+}
+
+/* main */
+
+.title {
+    color: aliceblue;
+    font-size: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-top: 100px;
+}
+
+form {  
+    padding: 40px 0 15px 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+form input,
+form button {
+    padding: 10px;
+    padding-left: 20px;
+    font-size: 19px;
+    background-color: aliceblue;
+    border-radius: 20px;
+    /* border-width: 1px; */
+    border: none;
+    box-shadow: 0 2px 2px 0 rgba(0, 0, 0, .1);
+}
+
+form button {
+    color: darkcyan;
+    background: aliceblue;
+    cursor: pointer;
+    transition: all 0.3 ease;
+    margin-left: 10px;
+}
+
+form button:hover {
+    color: aliceblue;
+    background: darkcyan;
+}
+
+.plus-button {
+    margin-right: 7px;
+}
+
+/* todo list */
+
+.today {
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 50%;
+    max-width: 400px;
+    min-width: 320px;
+    margin: 0 auto;
+    z-index: 1;
+    position: sticky;
+    top: 0;
+    background: transparent;
+    padding: 0px 10px 0 10px;
+}
+
+.today-title {
+    font-size: 16px;
+}
+
+select {
+    color: white;
+    background: rgba(0, 0, 0, 0.352);
+    padding: 5px 10px;
+    width: 150px;
+    height: 50px;
+    cursor: pointer;
+}
+
+.select::after {
+    content: "\25BC";
+    color: white;
+    position: absolute;
+    /* background: darkcyan; */
+    top: 13px;
+    right: 20px;
+    pointer-events: none;
+    transition: all 0.3s ease;
+}
+
+select {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    outline: none;
+    border: none;
+}
+
+.select {
+    margin: 10px;
+    position: relative;
+    overflow: hidden;
+}
+
+.todo-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-bottom: 20px;
+}
+
+.todo-list {
+    width: 100%;
+    list-style: none;
+    overflow-y: auto;
+    height: 88vh;
+}
+
+.todo {
+    width: 50%;
+    max-width: 400px;
+    min-width: 320px;
+    margin: 10px auto;
+    padding-left: 10px;
+    background: aliceblue;
+    color: black;
+    font-size: 18px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: 0.3s;
+    border-radius: 20px;
+    box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.1);
+}
+
+.todo:hover {
+    background: rgb(214, 217, 222);
+    transform: scale(1.02);
+}
+
+.todo li {
+    overflow-x: hidden;
+    flex: 1;
+}
+
+.trash-btn, 
+.complete-btn {
+    color: aliceblue;
+    border: none;
+    padding: 20px;
+    cursor: pointer;
+    font-size: 18px;
+}
+
+.complete-btn {
+    color: rgb(255, 200, 0);
+    background: transparent;
+}
+
+.trash-btn {
+    border-top-right-radius: 20px;
+    border-bottom-right-radius: 20px;
+    color: rgb(171, 171, 171);
+    background: transparent;
+}
+
+.todo-item {
+    padding: 0 10px;
+}
+
+.fa-trash, 
+.fa-check-circle {
+    pointer-events: none;
+}
+
+.completed {
+    text-decoration: line-through;
+    opacity: 0.6;
+}
+
+.slide {
+    transform: translateX(100px);
+    opacity: 0;
+}
+
+.modal-container {
+    background: rgba(0, 0, 0, 0.842);
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 250ms ease;
+    z-index: 1000;
+    display: flex;
+}
+
+.modal-container:target {
+    opacity: 1;
+    pointer-events: all;
+}
+
+.modal {
+    margin: auto;
+    padding: 30px;
+    border: none;
+    border-radius: 10px;
+    color: aliceblue;
+    background: rgba(255, 255, 255, 0.033);
+    backdrop-filter: blur(40px);
+    border: 2px solid #ffffff44;
+
+    z-index: 5;
+}
+
+.todo-desc {
+    display: flex;
+    align-items: center;
+    width: 100%;
+}
+
+.todo-desc .add-todo-input {
+    box-shadow: 0 0 1px 1px rgba(255, 255, 255, 0.43);
+    background: rgba(0, 0, 0, 0.352);
+    color: aliceblue;
+    border: none;
+    padding: 8px 10px;
+    border-radius: 4px;
+    font-size: 16px;
+    flex: 1;
+}
+
+.todo-desc .date-picker {
+    background: rgba(0, 0, 0, 0.352);
+    margin-left: 10px;
+    padding: 5px 10px;
+    box-shadow: 0 0 1px 1px rgba(255, 255, 255, 0.2);
+    border-radius: 5px;
+    font-size: 17px;
+    flex: 1;
+}
+
+.todo-desc .date-picker i {
+    margin-right: 4px;
+    right: 10px;
+    color: rgb(112, 166, 168);
+}
+
+.modal a {
+    border: none;
+    margin-left: 10px;
+    padding: 8px 10px;
+    border-radius: 4px;
+    text-decoration: none;
+    color: white;
+}
+
+.todo-options {
+    display: flex;
+    align-items: center;
+    margin-top: 20px;
+}
+
+.todo-options select {
+    flex: 1;
+    background: rgba(0, 0, 0, 0.352);
+    padding: 5px 10px;
+    font-size: 17px;
+}
+
+.todo-options .cancel-btn {
+    flex: 0.75;
+    background: rgb(77, 77, 77);
+}
+
+.todo-options .commit-btn {
+    flex: 1.25;
+    background: darkcyan
+}

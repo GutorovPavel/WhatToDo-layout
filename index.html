@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+    <!-- Font Awesome cdn css -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="./styles.css">
+    <link rel="stylesheet" href="./adaptive.css">
+    <title>What To Do?</title>
+</head>
+<body>
+
+    <header>
+        <div class="topbar">
+            <div class="menu-btn">
+                <i class="fas fa-bars"></i>
+            </div>
+            <div class="profile-btn">
+                <img src="images/avatar.png" alt="avatar">
+            </div>
+            <a href="#modal" class="add-todo">
+                <i class="fas fa-plus"></i>
+            </a>    
+        </div>
+    </header>
+
+    <div class="dialog">
+        <div class="account">
+            <div class="image-container">
+                <img src="images/avatar.png" alt="avatar">
+            </div>
+            <div class="credentials">
+                <b>visshiisort</b>
+                <p>pavelgutorovgut@gmail.com</p>
+            </div>
+        </div>
+        <ul class="account-options">
+            <li class="journal"><i class="fas fa-book"></i>Журнал действий</li>
+            <li class="theme"><i class="fas fa-pen"></i>Тема</li>
+            <li class="quit"><i class="fas fa-door-open"></i>Выйти</li>
+        </ul>
+    </div>
+
+    <div class="sidebar">
+        <div class="menu">
+            <div class="menu-item">
+                <a href="">
+                    <i class="fas fa-calendar-day"></i>
+                    Сегодня
+                    <span class="number">10</span>
+                </a>
+            </div>
+            <div class="menu-item">
+                <a href="">
+                    <i class="fas fa-calendar-week"></i>
+                    Предстоящие
+                </a>
+            </div>
+            <div class="projects-title">
+                <b>Проекты</b>
+                <i class="fas fa-angle-left"></i>
+            </div>
+            <ul class="projects-list">
+                <li class="project">
+                    Учеба
+                </li>
+                <li class="project">
+                    Учеба
+                </li>
+                <li class="project">
+                    Учеба
+                </li>
+            </ul>
+        </div>
+        <div class="close-btn">
+            <i class="fas fa-caret-left"></i>
+        </div>
+    </div>
+
+    <div id="modal" class="modal-container">
+        <dialog class="modal">
+            <div class="todo-desc">
+                <input type="text" class="add-todo-input" placeholder="Новая задача">
+                <div class="date-picker">
+                    <i class="fas fa-calendar-check"></i>
+                    Сегодня
+                </div>
+            </div>
+            <div class="todo-options">
+                <select name="projects" class="project-filter">
+                    <option value="1">Учеба</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                </select>
+                <a href="#" class="cancel-btn">Отменить</a>
+                <a href="#" class="commit-btn" type="submit">Добавить задачу</a>
+            </div>
+        </dialog>
+    </div>
+
+    <main>
+        <h1 class="title">What To Do?</h1>
+
+        <form action="">
+            <input type="text" class="todo-input" placeholder="Новая задача">
+            <button class="todo-button" type="submit">
+                <p class="plus-button">+</p>
+            </button>
+        </form>
+
+        <div class="today">
+            <p id="date-today" class="today-title"></p>
+    
+            <div class="select">
+                <select name="todos" class="todo-filter">
+                    <option value="all">Все</option>
+                    <option value="completed">Выполненные</option>
+                    <option value="incomplete">Невыполненные</option>
+                </select>
+            </div>
+        </div>
+    
+        <div class="todo-container">        
+            <ul class="todo-list"></ul>
+        </div>
+        
+
+    </main>
+
+    <script src="./script.js"></script>
+</body>
+</html>

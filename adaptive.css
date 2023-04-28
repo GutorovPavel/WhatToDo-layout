@@ -1,0 +1,68 @@
+@media only screen and (max-width: 370px) {
+
+}
+
+@media only screen and (max-width: 600px) {
+
+    header {
+        background: rgb(10, 10, 10);
+    }
+
+    .dialog {
+        width: 100%;
+        border: none;
+        box-shadow: none;
+        right: 0;
+        background: rgb(10, 10, 10);
+    }
+
+    .sidebar {
+        width: 100%;
+        border: none;
+        box-shadow: none;
+        background: rgb(10, 10, 10);
+    }
+
+    .todo-desc {
+        flex-direction: column;
+    }
+
+    .todo-desc .exclamation {
+        position: absolute;
+        margin-left: 12px;
+        color: rgb(255, 255, 255);
+    }
+
+    .todo-options {
+        flex-direction: column;
+    }
+    
+    .todo-desc .add-todo-input {
+        width: 100%;
+    }
+    
+    .todo-desc .date-picker {
+        margin-left: 0;
+        width: 100%;
+    }
+    
+    .todo-desc .date-picker i {
+        margin-right: 0px;
+        right: 0px;
+    }
+
+    .todo-options select {
+        padding: 10px 10px;
+    }
+
+    
+    .todo-options .cancel-btn,
+    .todo-options .commit-btn,
+    .todo-options select,
+    .todo-desc .date-picker,
+    .todo-desc .add-todo-input {
+        margin-left: 0;
+        width: 100%;
+        margin-top: 10px;
+    }
+}
