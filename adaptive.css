@@ -34,6 +34,7 @@
     }
 
     .todo-options {
+        margin-top: 20px;
         flex-direction: column;
     }
     

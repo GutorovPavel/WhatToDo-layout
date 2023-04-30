@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+    <!-- Font Awesome cdn css -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="./login_styles.css">
+    <link rel="stylesheet" href="./login_adaptive.css">
+    <title>What To Do?</title>
+</head>
+<body>
+    <main>
+        <h1 class="title">What To Do?</h1>
+        <h2 class="login-header">Регистрация</h2>
+        <a href="./login.html" class="go-to">У меня уже есть в аккаунт.</a>
+        
+        <!-- <div class="login-error-msg-holder">
+            <p class="login-error-msg">Invalid username <span id="error-msg-second-line">and/or password</span></p>
+        </div> -->
+        
+        <div class="login-form">
+            <input name="username" id="username-field" class="login-form-field" placeholder="Никнейм">
+            <input type="email" name="email" id="email-field" class="login-form-field" placeholder="Почта">
+            <input type="password" name="password" id="password-field" class="login-form-field" placeholder="Пароль">
+            <input type="password" name="confirm-password" id="confirm-password-field" class="login-form-field" placeholder="Подтвердите пароль">
+            <input type="submit" value="Зарегистрироваться" class="register-form-submit">
+            <span id="msg"></span>
+        </div>
+        <div class="google-container">
+            <i class="fab fa-google"></i>
+            <a href="#" class="google_enter">Продолжить через Google</a>
+        </div>
+    </main>
+    <script src="./login_script.js"></script>
+</body>
+    <script type="module" src="./firebase.js"></script>
+    <script type="module">
+        import { register } from './firebase.js';
+        
+        const registerBtn = document.querySelector(".register-form-submit");
+        registerBtn.addEventListener("click", register);
+
+    </script>
+</html>

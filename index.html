@@ -15,6 +15,10 @@
     <title>What To Do?</title>
 </head>
 <body>
+    <script src="https://www.gstatic.com/firebasejs/9.21.0/firebase-app.js"></script>;
+    <script src="https://www.gstatic.com/firebasejs/9.21.0/firebase-auth.js"></script>;
+    <script src="https://www.gstatic.com/firebasejs/9.21.0/firebase-database.js"></script>;
+
 
     <header>
         <div class="topbar">
@@ -40,11 +44,11 @@
                 <p>pavelgutorovgut@gmail.com</p>
             </div>
         </div>
-        <ul class="account-options">
-            <li class="journal"><i class="fas fa-book"></i>Журнал действий</li>
-            <li class="theme"><i class="fas fa-pen"></i>Тема</li>
-            <li class="quit"><i class="fas fa-door-open"></i>Выйти</li>
-        </ul>
+        <div class="account-options">
+            <a href="#" class="journal"><i class="fas fa-book"></i>Журнал действий</a>
+            <a href="#" class="theme"><i class="fas fa-pen"></i>Тема</a>
+            <a href="#" class="quit"><i class="fas fa-door-open"></i>Выйти</a>
+        </div>
     </div>
 
     <div class="sidebar">
@@ -62,21 +66,15 @@
                     Предстоящие
                 </a>
             </div>
-            <div class="projects-title">
-                <b>Проекты</b>
-                <i class="fas fa-angle-left"></i>
+            <div class="dropdown">
+                <div class="projects-title">
+                    <b>Проекты</b>
+                    <i class="fas fa-angle-left"></i>
+                </div>
+                <div class="projects-list">
+                    <a href="#" class="project">Учеба</a>
+                </div>
             </div>
-            <ul class="projects-list">
-                <li class="project">
-                    Учеба
-                </li>
-                <li class="project">
-                    Учеба
-                </li>
-                <li class="project">
-                    Учеба
-                </li>
-            </ul>
         </div>
         <div class="close-btn">
             <i class="fas fa-caret-left"></i>
@@ -85,22 +83,26 @@
 
     <div id="modal" class="modal-container">
         <dialog class="modal">
-            <div class="todo-desc">
+            <!-- <form class="modal-form">  -->
+                <div class="todo-desc">
                 <input type="text" class="add-todo-input" placeholder="Новая задача">
-                <div class="date-picker">
-                    <i class="fas fa-calendar-check"></i>
-                    Сегодня
+                <!-- <div class="date-picker"> -->
+                    <!-- <i class="fas fa-calendar-check">< /i> -->
+                    <!-- Сегодня -->
+                <!-- </div> -->
+                <input type="date" name class="date-picker">
                 </div>
-            </div>
-            <div class="todo-options">
-                <select name="projects" class="project-filter">
-                    <option value="1">Учеба</option>
-                    <option value="2">2</option>
-                    <option value="3">3</option>
-                </select>
-                <a href="#" class="cancel-btn">Отменить</a>
-                <a href="#" class="commit-btn" type="submit">Добавить задачу</a>
-            </div>
+                <div class="todo-options">
+                    <select name="projects" class="project-filter">
+                        <option value="1">Учеба</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                    </select>
+                    <a href="#" class="cancel-btn">Отменить</a>
+                    <a href="#" class="commit-btn" type="submit">Добавить задачу</a>
+                </div>
+            <!-- </form> -->
+            <span id="msg"></span>
         </dialog>
     </div>
 
@@ -135,4 +137,11 @@
 
     <script src="./script.js"></script>
 </body>
+<script type="module" src="./firebase.js"></script> 
+<script type="module">
+    import { signOut } from './firebase.js';
+
+    const signOutBtn = document.querySelector(".quit");
+    signOutBtn.addEventListener("click", signOut);
+</script>
 </html>

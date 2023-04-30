@@ -16,10 +16,12 @@ body {
 
 main {
     margin: 0 auto;
-    width: 50%;
-    height: 70%;
-    display: grid;
-    justify-items: center;
+    width: fit-content;
+    height: fit-content;
+    padding: 40px;
+    display: flex;
+    flex-direction: column;
+    /* justify-items: center; */
     align-items: center;
     background: rgba(255, 255, 255, 0.033);
     backdrop-filter: blur(40px);
@@ -28,13 +30,21 @@ main {
     color: whitesmoke;
 }
 
+.title {
+    font-size: 50px;
+    padding-top: 50px;
+}
+
+.go-to {
+    color: whitesmoke;
+    font-size: 14px;
+    padding-top: 20px;
+}
+
 .login-error-msg-holder {
-    width: 50%;
-    height: 70%;
-    max-width: 170px;
-    display: grid;
-    justify-items: center;
-    align-items: center;
+    height: fit-content;
+    width: 200px;
+    padding-top: 60px;
 }
 
 .login-error-msg {
@@ -58,6 +68,7 @@ main {
     flex-direction: column;
     justify-items: center;
     align-items: center;
+    padding-top: 50px;
 }
 
 .login-form-field::placeholder {
@@ -76,6 +87,7 @@ main {
     padding: 0px 0px 5px 5px;
 }
 
+.register-form-submit,
 .login-form-submit {
     width: 100%;
     padding: 7px;
@@ -83,9 +95,28 @@ main {
     border-radius: 5px;
     color: white;
     font-size: 16px;
+    text-align: center;
 
     font-weight: bold;
     background-color: #3a3a3a;
     cursor: pointer;
     outline: none;
+}
+
+.google-container {
+    width: 200px;
+    font-size: 14px;
+    padding-top: 14px;
+}
+
+.google-container i {
+    margin-right: 6px;
+}
+
+.google-container a {
+    color: whitesmoke;
+}
+
+.google-container:hover {
+    color: rgba(255, 0, 0, 0.571)
 }
