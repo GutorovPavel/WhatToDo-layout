@@ -22,7 +22,7 @@
         box-shadow: none;
         background: rgb(10, 10, 10);
     }
-
+    
     .todo-desc {
         flex-direction: column;
     }

@@ -1,5 +1,6 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.21.0/firebase-app.js";
-import { getDatabase, set, ref, update} from "https://www.gstatic.com/firebasejs/9.21.0/firebase-database.js";
+import { getDatabase, set, ref, update, get, child, remove } from "https://www.gstatic.com/firebasejs/9.21.0/firebase-database.js";
+import { getFirestore, addDoc, query, collection, where, getDocs, getDoc, updateDoc, deleteDoc, onSnapshot, doc } from "https://www.gstatic.com/firebasejs/9.21.0/firebase-firestore.js";
 import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/9.21.0/firebase-auth.js";
 
 const firebaseConfig = {
@@ -16,6 +17,7 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const database = getDatabase(app);
+const store = getFirestore(app);
 
 //Setup a register 
 
@@ -91,6 +93,213 @@ function signOut() {
     });
 };
 
+
+
+// CRUD
+
+// const addTodoInput = document.querySelector(".add-todo-input");
+// const datePicker = document.querySelector(".date-picker");
+// const cancelModalBtn = document.querySelector(".cancel-btn");
+const msg = document.getElementById("msg");
+
+// FIRESTORE
+
+function addTodayData(e) {
+    e.preventDefault();
+    var todayTodoInput = document.querySelector(".todo-input");
+
+    if (todayTodoInput.value !== "") {
+        let todo = {
+            value: todayTodoInput.value,
+            status: "active",
+            date: todayDate
+        };
+    
+        console.log(todo);
+    
+        addDoc(collection(store, "todo-items"), todo);
+    
+        todayTodoInput.value = "";
+        
+        let todoHTML = ` 
+                <div class="todo ${todo.status === "completed" ? "completed": ""}">
+                    <li class="todo-item">${todo.value}</li>
+                    <button data-id=${todo.id} class="complete-btn">
+                        <i class="fas fa-check-circle"></i>
+                    </button>
+                    <button class="trash-btn">
+                        <i class="fas fa-trash"></i>
+                    </button>
+                </div>
+            `
+        document.querySelector(".todo-list").innerHTML += todoHTML;
+    
+        getData();
+    }
+}
+
+function addData(e) {
+    e.preventDefault();
+
+    var addTodoInput = document.querySelector(".add-todo-input");
+    var datePicker = document.querySelector(".date-picker");
+
+    if (addTodoInput.value === "") {
+        msg.innerText = "Заполните поле ввода";
+    } else {
+        console.log({
+            value: addTodoInput.value,
+            status: "active",
+            date: datePicker.value
+        });
+    
+        addDoc(collection(store, "todo-items"), {
+            value: addTodoInput.value,
+            status: "active",
+            date: datePicker.value
+        });
+    
+        addTodoInput.value = "";
+        datePicker.value = "";
+    
+        getData();
+    }
+}
+
+let today = new Date();
+let day = `${today.getDate() < 10 ? "0": ""}${today.getDate()}`;
+let month = `${(today.getMonth()) < 10 ? "0": ""}${today.getMonth() + 1}`;
+let year = today.getFullYear();
+let todayDate = `${year}-${month}-${day}`;
+const todayTodos = query(collection(store, "todo-items"), where("date", "==", todayDate))
+// let numberToday;
+
+function getData() {
+    getDocs(todayTodos).then(snapshot => {
+
+        let todos = [];
+
+        snapshot.forEach((doc) => {
+            todos.push({
+                id: doc.id,
+                ...doc.data()
+            });
+        })
+        console.log(todos);
+        generateData(todos);
+
+        var numberToday = document.querySelector(".number");
+        numberToday.innerText = `${todos.length}`;
+    });
+}
+
+function generateData(todos) {
+
+    let todosHTML = "";
+
+    todos.forEach((todo) => {
+        // console.log(todo);
+        todosHTML += ` 
+            <div class="todo ${todo.status === "completed" ? "completed": ""}">
+                <li class="todo-item">${todo.value}</li>
+                <button data-id=${todo.id} class="complete-btn">
+                    <i class="fas fa-check-circle"></i>
+                </button>
+                <button data-id=${todo.id} class="trash-btn">
+                    <i class="fas fa-trash"></i>
+                </button>
+            </div>`
+    });
+
+    document.querySelector(".todo-list").innerHTML = todosHTML;
+    createEventListeners();
+}
+
+function createEventListeners() {
+    let todoChecks = document.querySelectorAll(".todo .complete-btn");
+    console.log(todoChecks);
+    todoChecks.forEach(check => {
+        check.addEventListener("click", () => {
+            todoComplete(check.dataset.id);
+            check.parentElement.classList.toggle("completed");
+        });
+    })
+
+    let todoTrashes = document.querySelectorAll(".todo .trash-btn");
+    todoTrashes.forEach(trash => {
+        trash.addEventListener("click", () => {
+            todoDelete(trash.dataset.id);
+            const todo = trash.parentElement;
+            todo.classList.add("slide");
+            todo.addEventListener("transitionend", () => {
+                todo.remove();
+            });
+        })
+    })
+}
+
+function todoComplete(id) {
+
+    console.log(id);
+    getDoc(doc(store, "todo-items", id)).then(d => {
+        if(d.exists) {
+            let status = d.data().status;
+            if (status === "active") {
+                console.log("in active case")
+                updateDoc(doc(store, "todo-items", id), {
+                    status: "completed"
+                });
+            } else {
+                updateDoc(doc(store, "todo-items", id), {
+                    status: "active"
+                });
+            }
+        }
+    })
+}
+
+function todoDelete(id) {
+    console.log(id);
+    getDoc(doc(store, "todo-items", id)).then(d => {
+        if(d.exists) {
+            deleteDoc(doc(store, "todo-items", id));
+        }
+    })
+
+    getData();
+}
+
+
+
+// REALTIME DATEBASE
+
+// function insertData(){
+
+//     if(addTodoInput.value === "") {
+//         msg.innerText = "Заполните поле ввода."
+//     } else {
+//         msg.innerText = "";
+//         set(ref(database, "Todos/" + addTodoInput.value), {
+//             value: addTodoInput.value,
+//             checked: false,
+//             date: datePicker.value,
+//         })
+//         .then(()=>{
+//             alert("insert success!");
+//         })
+//         .catch((error)=>{
+//             error_message=error.message;
+//             alert(error_message);
+//         });
+//     }
+// }
+
+// function selectData() {
+//     const db_ref = ref(database);
+
+//     get(child(db_ref, "Todos/"+ ))
+// }
+
 // onAuthStateChanged(auth, (user) => {
 //     if (user) {
 //         // User is signed in, see docs for a list of available properties
@@ -103,7 +312,7 @@ function signOut() {
 //     }
 //   });
 
-export { register, login, signOut };
+export { register, login, signOut, addData, addTodayData, getData, todoComplete };
 
 // loginBtn.addEventListener("click", login());
 

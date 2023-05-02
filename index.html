@@ -15,10 +15,6 @@
     <title>What To Do?</title>
 </head>
 <body>
-    <script src="https://www.gstatic.com/firebasejs/9.21.0/firebase-app.js"></script>;
-    <script src="https://www.gstatic.com/firebasejs/9.21.0/firebase-auth.js"></script>;
-    <script src="https://www.gstatic.com/firebasejs/9.21.0/firebase-database.js"></script>;
-
 
     <header>
         <div class="topbar">
@@ -99,7 +95,7 @@
                         <option value="3">3</option>
                     </select>
                     <a href="#" class="cancel-btn">Отменить</a>
-                    <a href="#" class="commit-btn" type="submit">Добавить задачу</a>
+                    <a href="index.html" class="commit-btn" type="submit">Добавить задачу</a>
                 </div>
             <!-- </form> -->
             <span id="msg"></span>
@@ -129,9 +125,18 @@
         </div>
     
         <div class="todo-container">        
-            <ul class="todo-list"></ul>
+            <ul class="todo-list">
+                <!-- <div class="todo">
+                    <li class="todo-item">Задача</li>
+                    <button class="complete-btn">
+                        <i class="fas fa-check-circle"></i>
+                    </button>
+                    <button class="trash-btn">
+                        <i class="fas fa-trash"></i>
+                    </button>
+                </div> -->
+            </ul>
         </div>
-        
 
     </main>
 
@@ -139,9 +144,20 @@
 </body>
 <script type="module" src="./firebase.js"></script> 
 <script type="module">
-    import { signOut } from './firebase.js';
+    import { signOut, addData, addTodayData, getData } from './firebase.js';
+
+    getData();
+
+    console.log(getData());
 
     const signOutBtn = document.querySelector(".quit");
     signOutBtn.addEventListener("click", signOut);
+
+    const commitTodoBtn = document.querySelector(".commit-btn");
+    commitTodoBtn.addEventListener("click", addData);
+
+    const todoBtn = document.querySelector(".todo-button");
+    todoBtn.addEventListener("click", addTodayData);
+    
 </script>
 </html>

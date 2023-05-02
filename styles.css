@@ -10,6 +10,7 @@
 
 body {
     background: url(images/background4.jpg);
+    /* background: rgba(0, 0, 0, 0.947); */
     color: black;
     font-family: "Poppins", sans-serif;
     min-height: 100vh;
@@ -51,7 +52,7 @@ header {
 }
 
 .profile-btn img {
-    width: 100%;
+    width: 80%;
     height: auto;
     clip-path: circle();
 }
@@ -88,14 +89,18 @@ header {
     margin-top: 30px;
 }
 
-.menu .menu-item {
+.menu .menu-item,
+.menu .dropdown .projects-title {
     position: relative;
     cursor: pointer;
+    display: flex;
+    align-items: center;
 }
 
 .menu .menu-item a,
 .menu .projects-title {
     color: aliceblue;
+    align-items: center;
     font-size: 16px;
     padding: 5px 30px;
     display: block;
@@ -128,14 +133,20 @@ header {
     margin-top: 30px;
 } */
 
-.menu .dropdown:hover .projects-list {
-    display: flex;
-    flex-direction: column;
+.menu .dropdown:hover .projects-title {
     background-color: rgba(200, 200, 200, 0.168);
 }
 
+.menu .dropdown:hover .projects-list {
+    display: flex;
+    flex-direction: column;
+    background-color: rgba(200, 200, 200, 0.052);
+}
+
 .menu .dropdown:hover i {
-    transform: rotate(270deg);
+    transition: ease 0.3s;
+    transition-property: transform;
+    transform: rotate(-90deg);
 }
 
 .menu .menu-item span,
@@ -246,10 +257,10 @@ form {
 form input,
 form button {
     padding: 10px;
-    padding-left: 20px;
-    font-size: 19px;
+    padding-left: 18px;
+    font-size: 16px;
     background-color: aliceblue;
-    border-radius: 20px;
+    border-radius: 14px;
     /* border-width: 1px; */
     border: none;
     box-shadow: 0 2px 2px 0 rgba(0, 0, 0, .1);
@@ -350,12 +361,12 @@ select {
     padding-left: 10px;
     background: aliceblue;
     color: black;
-    font-size: 18px;
+    font-size: 16px;
     display: flex;
     justify-content: space-between;
     align-items: center;
     transition: 0.3s;
-    border-radius: 20px;
+    border-radius: 14px;
     box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.1);
 }
 
