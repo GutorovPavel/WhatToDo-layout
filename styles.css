@@ -9,7 +9,9 @@
 }
 
 body {
-    background: url(images/background4.jpg);
+    background: url(images/background5.jpg);
+    background-attachment: fixed;
+    background-size: cover;
     /* background: rgba(0, 0, 0, 0.947); */
     color: black;
     font-family: "Poppins", sans-serif;
@@ -301,6 +303,11 @@ form button:hover {
     padding: 0px 10px 0 10px;
 }
 
+.centered {
+    width: 100%;
+    text-align: center;
+}
+
 .today-title {
     font-size: 16px;
 }
@@ -344,6 +351,10 @@ select {
     justify-content: center;
     align-items: center;
     padding-bottom: 20px;
+}
+
+.allTodos {
+    margin-top: 60px;
 }
 
 .todo-list {

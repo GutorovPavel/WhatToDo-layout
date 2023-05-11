@@ -7,8 +7,10 @@
 
 body {
     display: grid;
-    background: url(images/background4.jpg);
-
+    background: url(images/background5.jpg);
+    background-attachment: fixed;
+    background-size: cover;
+    
     font-family: "Poppins", sans-serif;
     min-height: 100vh;
     align-items: center;
@@ -107,6 +109,7 @@ main {
     width: 200px;
     font-size: 14px;
     padding-top: 14px;
+    cursor: pointer;
 }
 
 .google-container i {

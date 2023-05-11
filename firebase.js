@@ -1,7 +1,7 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.21.0/firebase-app.js";
 import { getDatabase, set, ref, update, get, child, remove } from "https://www.gstatic.com/firebasejs/9.21.0/firebase-database.js";
 import { getFirestore, addDoc, query, collection, where, getDocs, getDoc, updateDoc, deleteDoc, onSnapshot, doc } from "https://www.gstatic.com/firebasejs/9.21.0/firebase-firestore.js";
-import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/9.21.0/firebase-auth.js";
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.21.0/firebase-auth.js";
 
 const firebaseConfig = {
     apiKey: "AIzaSyDPsyWdiuQW4k6pBi-XtkBLgpJpd-AnxDQ",
@@ -18,6 +18,34 @@ const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const database = getDatabase(app);
 const store = getFirestore(app);
+const provider = new GoogleAuthProvider(app);
+
+var usernameBlock = document.querySelector(".display-username");
+var emailBlock = document.querySelector(".display-email");
+var photoBlock = document.querySelectorAll(".account-photo");
+
+
+onAuthStateChanged(auth, (user) => {
+    if (user) {
+      // User is signed in, see docs for a list of available properties
+      // https://firebase.google.com/docs/reference/js/firebase.User
+      console.log(user.displayName + "/" + user.email);
+
+      usernameBlock.innerText = user.displayName;
+      emailBlock.innerText = user.email;
+      photoBlock.forEach((item) => {
+        item.src = user.photoURL;
+      });
+
+      // ...
+    } else {
+        console.log("...");
+        // usernameBlock.innerText = "";
+        // emailBlock.innerText = "";
+      // User is signed out
+      // ...
+    }
+  });
 
 //Setup a register 
 
@@ -59,6 +87,34 @@ function register() {
             alert(error_message);
         });
     }
+}
+
+function goWithGoogle() {
+    
+    signInWithPopup(auth, provider)
+        .then((result) => {
+            const credential = GoogleAuthProvider.credentialFromResult(result);
+            const token = credential.accessToken;
+            const user = result.user;
+            
+            // const user_data = {
+            //     email: ,
+            //     lastLogin: Date.now()
+            // };
+
+            // set(ref(database, 'users/' + user.uid), user_data);
+
+            alert(`User loged in! Hello ${user.displayName}`);          
+
+            window.location.href = 'index.html';
+
+        }).catch((error) => {
+            const errorCode = error.code;
+            const errorMessage = error.message;
+            // const email = error.customData.email;
+            const credential = GoogleAuthProvider.credentialFromError(error);
+            alert(errorMessage);
+        });
 }
 
 function login() {
@@ -118,6 +174,10 @@ function addTodayData(e) {
         console.log(todo);
     
         addDoc(collection(store, "todo-items"), todo);
+        addDoc(collection(store, "journal"), {
+            value: `Добавлена новая задача: ${todo.value} на ${todo.date}`,
+            date: Date.now()
+        });
     
         todayTodoInput.value = "";
         
@@ -158,11 +218,16 @@ function addData(e) {
             status: "active",
             date: datePicker.value
         });
+        addDoc(collection(store, "journal"), {
+            value: `Добавлена новая задача: ${todo.value} на ${todo.date}`,
+            date: Date.now()
+        });
     
         addTodoInput.value = "";
         datePicker.value = "";
     
         getData();
+        getAllData();
     }
 }
 
@@ -172,10 +237,30 @@ let month = `${(today.getMonth()) < 10 ? "0": ""}${today.getMonth() + 1}`;
 let year = today.getFullYear();
 let todayDate = `${year}-${month}-${day}`;
 const todayTodos = query(collection(store, "todo-items"), where("date", "==", todayDate))
+const allTodos = query(collection(store, "todo-items"))
 // let numberToday;
 
 function getData() {
     getDocs(todayTodos).then(snapshot => {
+
+        let todos = [];
+
+        snapshot.forEach((doc) => {
+            todos.push({
+                id: doc.id,
+                ...doc.data()
+            });
+        })
+        console.log(todos);
+        generateData(todos);
+
+        var numberToday = document.querySelector(".number");
+        numberToday.innerText = `${todos.length}`;
+    });
+}
+
+function getAllData() {
+    getDocs(allTodos).then(snapshot => {
 
         let todos = [];
 
@@ -249,9 +334,17 @@ function todoComplete(id) {
                 updateDoc(doc(store, "todo-items", id), {
                     status: "completed"
                 });
+                addDoc(collection(store, "journal"), {
+                    value: `Статус задачи "${d.data().value}" изменен на "Выполнена"`,
+                    date: Date.now()
+                });
             } else {
                 updateDoc(doc(store, "todo-items", id), {
                     status: "active"
+                });
+                addDoc(collection(store, "journal"), {
+                    value: `Статус задачи "${d.data().value}" изменен на "Активна"`,
+                    date: Date.now()
                 });
             }
         }
@@ -263,10 +356,15 @@ function todoDelete(id) {
     getDoc(doc(store, "todo-items", id)).then(d => {
         if(d.exists) {
             deleteDoc(doc(store, "todo-items", id));
+            addDoc(collection(store, "journal"), {
+                value: `Задача "${d.data().value}" удалена`,
+                date: Date.now()
+            });
         }
     })
 
     getData();
+    getAllData();
 }
 
 
@@ -312,7 +410,7 @@ function todoDelete(id) {
 //     }
 //   });
 
-export { register, login, signOut, addData, addTodayData, getData, todoComplete };
+export { register, login, signOut, addData, addTodayData, getData, getAllData, todoComplete, goWithGoogle };
 
 // loginBtn.addEventListener("click", login());
 

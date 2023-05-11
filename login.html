@@ -32,17 +32,20 @@
         </div>
         <div class="google-container">
             <i class="fab fa-google"></i>
-            <a href="#" class="google_enter">Продолжить через Google</a>
+            <span class="google_enter">Продолжить через Google</span>
         </div>
     </main>
     <script src="./login_script.js"></script>
 </body>
     <script type="module" src="./firebase.js"></script>
     <script type="module">
-        import { login } from './firebase.js';
+        import { login, goWithGoogle } from './firebase.js';
         
         const loginBtn = document.querySelector(".login-form-submit");
         loginBtn.addEventListener("click", login);
+
+        const googleButton = document.querySelector(".google-container");
+        googleButton.addEventListener("click", goWithGoogle);   
 
     </script>
 </html>

@@ -41,10 +41,13 @@
 </body>
     <script type="module" src="./firebase.js"></script>
     <script type="module">
-        import { register } from './firebase.js';
+        import { register, goWithGoogle } from './firebase.js';
         
         const registerBtn = document.querySelector(".register-form-submit");
         registerBtn.addEventListener("click", register);
+
+        const googleButton = document.querySelector(".google-container");
+        googleButton.addEventListener("click", goWithGoogle);   
 
     </script>
 </html>
