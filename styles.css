@@ -352,20 +352,34 @@ select {
     align-items: center;
     padding-bottom: 20px;
 }
+    
+/* .allTodos {
+    display: flex;
+    flex-direction: column;
+} */
 
-.allTodos {
-    margin-top: 60px;
+.modal-column {
+    display: flex;
+    flex-direction: column;
 }
 
-.todo-list {
+.main-todo-list {
     width: 100%;
     list-style: none;
     overflow-y: auto;
     height: 88vh;
 }
 
-.todo {
+.modal-column .todo-list,
+.modal-column .note-list {
+    max-height: 400px;
+    overflow: hidden; 
+    overflow-y: scroll;
+}
+
+.todo, .note {
     width: 50%;
+    height: 50px;
     max-width: 400px;
     min-width: 320px;
     margin: 10px auto;
@@ -379,6 +393,11 @@ select {
     transition: 0.3s;
     border-radius: 14px;
     box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.1);
+}
+
+.note {
+    background: black;
+    color: aliceblue;
 }
 
 .todo:hover {
@@ -447,7 +466,7 @@ select {
     pointer-events: all;
 }
 
-.modal {
+.modal, .tasks-modal {
     position: absolute;
     top: 50%;
     left: 50%;
@@ -456,6 +475,7 @@ select {
     display: flex;
     flex-direction: column;
     align-items: center;
+
     padding: 30px;
 
     border: none;
@@ -464,6 +484,10 @@ select {
     background: rgba(255, 255, 255, 0.033);
     backdrop-filter: blur(40px);
     border: 2px solid #ffffff44;
+}
+
+.tasks-modal {
+    height: fit-content;
 }
 
 /* .modal-form {
@@ -545,6 +569,15 @@ select {
 .todo-options .cancel-btn {
     flex: 0.75;
     background: rgb(77, 77, 77);
+}
+
+.tasks-modal .cancel-btn {
+    margin-top: 20px;
+    padding: 10px;
+    border-radius: 10px;
+    background: red;
+    color: whitesmoke;
+    text-decoration: none;
 }
 
 .todo-options .commit-btn {

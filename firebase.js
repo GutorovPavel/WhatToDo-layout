@@ -39,6 +39,7 @@ onAuthStateChanged(auth, (user) => {
 
       // ...
     } else {
+        window.location.href("login.html");
         console.log("...");
         // usernameBlock.innerText = "";
         // emailBlock.innerText = "";
@@ -236,8 +237,9 @@ let day = `${today.getDate() < 10 ? "0": ""}${today.getDate()}`;
 let month = `${(today.getMonth()) < 10 ? "0": ""}${today.getMonth() + 1}`;
 let year = today.getFullYear();
 let todayDate = `${year}-${month}-${day}`;
-const todayTodos = query(collection(store, "todo-items"), where("date", "==", todayDate))
-const allTodos = query(collection(store, "todo-items"))
+const todayTodos = query(collection(store, "todo-items"), where("date", "==", todayDate));
+const allTodos = query(collection(store, "todo-items"));
+const journal = query(collection(store, "journal"));
 // let numberToday;
 
 function getData() {
@@ -259,6 +261,25 @@ function getData() {
     });
 }
 
+function getJournal() {
+
+    getDocs(journal).then(snapshot => {
+        let notes = [];
+
+        snapshot.forEach((doc) => {
+            notes.push({
+                id: doc.id,
+                ...doc.data()
+            });
+        })
+        console.log(notes);
+        generateJournal(notes);
+
+        // var numberToday = document.querySelector(".number");
+        // numberToday.innerText = `${todos.length}`;
+    });
+}
+
 function getAllData() {
     getDocs(allTodos).then(snapshot => {
 
@@ -271,10 +292,7 @@ function getAllData() {
             });
         })
         console.log(todos);
-        generateData(todos);
-
-        var numberToday = document.querySelector(".number");
-        numberToday.innerText = `${todos.length}`;
+        generateAllData(todos);
     });
 }
 
@@ -296,8 +314,45 @@ function generateData(todos) {
             </div>`
     });
 
+    document.querySelector(".main-todo-list").innerHTML = todosHTML;
+    createEventListeners();
+}
+
+function generateAllData(todos) {
+
+    let todosHTML = "";
+
+    todos.forEach((todo) => {
+        // console.log(todo);
+        todosHTML += ` 
+            <div class="todo ${todo.status === "completed" ? "completed": ""}">
+                <li class="todo-item">${todo.value}</li>
+                <button data-id=${todo.id} class="complete-btn">
+                    <i class="fas fa-check-circle"></i>
+                </button>
+                <button data-id=${todo.id} class="trash-btn">
+                    <i class="fas fa-trash"></i>
+                </button>
+            </div>`
+    });
+
     document.querySelector(".todo-list").innerHTML = todosHTML;
     createEventListeners();
+}
+
+function generateJournal(notes) {
+    
+    let notesHTML = "";
+
+    notes.forEach((note) => {
+        console.log(note);
+        notesHTML += ` 
+            <div class="todo">
+                <li class="todo-item">${note.value}</li>
+            </div>`
+    });
+
+    document.querySelector(".note-list").innerHTML = notesHTML;
 }
 
 function createEventListeners() {
@@ -410,7 +465,7 @@ function todoDelete(id) {
 //     }
 //   });
 
-export { register, login, signOut, addData, addTodayData, getData, getAllData, todoComplete, goWithGoogle };
+export { register, login, signOut, addData, addTodayData, getData, getAllData, todoComplete, goWithGoogle, getJournal };
 
 // loginBtn.addEventListener("click", login());
 

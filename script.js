@@ -18,6 +18,10 @@ let todayDate = `${year}-${month}-${day}`;
 const menuBtn = document.querySelector(".menu-btn");
 const closeBtn = document.querySelector(".close-btn");
 const sideBar = document.querySelector(".sidebar");
+
+// const menuBtnPage2 = document.getElementById("menuBtnPage2");
+// const closeBtnPage2 = document.getElementById("closeBtnPage2");
+// const sideBarPage2 = document.getElementById("sideBarPage2");
 // const main = document.getElementsByTagName("main");
 
 menuBtn.addEventListener("click", () => {

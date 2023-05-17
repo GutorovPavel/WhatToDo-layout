@@ -41,8 +41,8 @@
             </div>
         </div>
         <div class="account-options">
-            <a href="#" class="journal"><i class="fas fa-book"></i>Журнал действий</a>
-            <a href="#" class="theme"><i class="fas fa-pen"></i>Тема</a>
+            <a href="#journal" class="journal"><i class="fas fa-book"></i>Журнал действий</a>
+            <!-- <a href="#" class="theme"><i class="fas fa-pen"></i>Тема</a> -->
             <a href="#" class="quit"><i class="fas fa-door-open"></i>Выйти</a>
         </div>
     </div>
@@ -57,7 +57,7 @@
                 </a>
             </div>
             <div class="menu-item">
-                <a href="all_todos.html">
+                <a href="#all-tasks" id="todo-list-btn">
                     <i class="fas fa-calendar-week"></i>
                     Предстоящие
                 </a>
@@ -102,6 +102,48 @@
         </dialog>
     </div>
 
+    <div id="all-tasks" class="modal-container">
+        <dialog class="tasks-modal">
+            <div class="todo-container allTodos">   
+                <div class="modal-column">
+                    <ul class="todo-list">
+                        <!-- <div class="todo">
+                            <li class="todo-item">Задача</li>
+                            <button class="complete-btn">
+                                <i class="fas fa-check-circle"></i>
+                            </button>
+                            <button class="trash-btn">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </div> -->
+                    </ul>
+                    <a href="#" class="cancel-btn">Закрыть</a>
+                </div> 
+            </div>
+        </dialog>
+    </div>
+
+    <div id="journal" class="modal-container">
+        <dialog class="tasks-modal">
+            <div class="todo-container allTodos">   
+                <div class="modal-column">
+                    <ul class="note-list">
+                        <!-- <div class="todo">
+                            <li class="todo-item">Задача</li>
+                            <button class="complete-btn">
+                                <i class="fas fa-check-circle"></i>
+                            </button>
+                            <button class="trash-btn">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </div> -->
+                    </ul>
+                    <a href="#" class="cancel-btn">Закрыть</a>
+                </div> 
+            </div>
+        </dialog>
+    </div>
+
     <main>
         <h1 class="title">What To Do?</h1>
 
@@ -125,7 +167,7 @@
         </div>
     
         <div class="todo-container">        
-            <ul class="todo-list">
+            <ul class="main-todo-list">
                 <!-- <div class="todo">
                     <li class="todo-item">Задача</li>
                     <button class="complete-btn">
@@ -144,11 +186,17 @@
 </body>
 <script type="module" src="./firebase.js"></script> 
 <script type="module">
-    import { signOut, addData, addTodayData, getData } from './firebase.js';
+    import { signOut, addData, addTodayData, getData, getAllData, getJournal } from './firebase.js';
 
+    // getAllData();
     getData();
 
-    console.log(getData());
+
+    const todoList = document.getElementById("todo-list-btn");
+    todoList.addEventListener("click", getAllData);
+
+    const journal = document.querySelector(".journal");
+    journal.addEventListener("click", getJournal);
 
     const signOutBtn = document.querySelector(".quit");
     signOutBtn.addEventListener("click", signOut);
